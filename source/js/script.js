@@ -30,14 +30,15 @@ const maxNum = 15;
 const inputPhone = document.querySelector("#phone"),
    inputText = document.querySelectorAll('input[type="text"]');
 
-function validity (min = 10, max = 4, input) {
+function validity (min, max, input) {
   const valueLengt = input.value.length;
-  let parrent = input.parentElement;
+  let parent = input.parentElement;
 
   if(valueLengt < min) {
     input.setCustomValidity(`Нужно еще символов : ${min - valueLengt}`);
-      if(parrent.hasChildNodes(".form__error-message")){
-        parrent.removeChild(parrent.childNodes[2]);
+      if(parent.hasChildNodes(".form__error-message")){
+        let cild =parent.childNodes[2];
+        parent.removeChild(cild)
       }
     input.insertAdjacentHTML('afterend', '<p class="form__error-message">Необходимо заполнить поле</p>')
     input.classList.add("form__input_error");
@@ -45,8 +46,8 @@ function validity (min = 10, max = 4, input) {
     input.setCustomValidity(`Лишних символов : ${max - valueLengt}`);
   } else {
     input.setCustomValidity("");
-      if(parrent.hasChildNodes(".form__error-message")){
-        parrent.removeChild(parrent.childNodes[2]);
+      if(parent.hasChildNodes(".form__error-message")){
+        parent.removeChild(parent.childNodes[2]);
       }
     input.classList.remove("form__input_error");
   }
@@ -59,3 +60,16 @@ inputText.forEach((input) => {
 })
 
 inputPhone.addEventListener("input", () => validity(minNum, maxNum, inputPhone));
+
+///
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  alert("Спасибо за заявку! Скоро мы с вами свяжемся.");
+
+  const inputs = document.querySelectorAll('input');
+
+  inputs.forEach((input) => {
+    input.value = '';
+  })
+});
